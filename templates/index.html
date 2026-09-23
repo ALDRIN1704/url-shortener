@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<main class="container">
+    <section class="hero">
+        <div class="topbar">
+            <div>
+                <p class="eyebrow">Backend Assessment</p>
+                <h1>URL Shortener</h1>
+            </div>
+            <div id="userArea"></div>
+        </div>
+
+        <p class="subtitle">Short links, click analytics, QR codes and authentication.</p>
+
+        <div id="authPanel" class="auth-panel">
+            <input id="username" placeholder="Username">
+            <input id="password" type="password" placeholder="Password">
+            <button id="loginBtn" type="button">Login</button>
+            <button id="registerBtn" type="button" class="secondary">Register</button>
+        </div>
+
+        <div id="appPanel" class="hidden">
+            <form id="shortenForm" class="shorten-form">
+                <input id="urlInput" type="url" placeholder="https://example.com/very/long/url" required>
+                <button type="submit">Shorten URL</button>
+            </form>
+
+            <div id="message" class="message hidden"></div>
+
+            <div id="result" class="result hidden">
+                <div>
+                    <span class="label">Short URL</span>
+                    <div class="result-row">
+                        <a id="shortLink" href="#" target="_blank"></a>
+                        <button id="copyBtn" type="button">Copy</button>
+                    </div>
+                </div>
+                <img id="qrImage" class="qr" alt="QR code">
+            </div>
+        </div>
+    </section>
+
+    <section id="dashboard" class="dashboard hidden">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">Analytics dashboard</p>
+                <h2>Overview</h2>
+            </div>
+            <button class="secondary" id="refreshBtn" type="button">Refresh</button>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <span>Total URLs</span>
+                <strong id="totalUrls">0</strong>
+            </div>
+            <div class="card">
+                <span>Total Clicks</span>
+                <strong id="totalClicks">0</strong>
+            </div>
+        </div>
+
+        <h3>Top URLs</h3>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Short URL</th>
+                    <th>Original URL</th>
+                    <th>Clicks</th>
+                </tr>
+                </thead>
+                <tbody id="urlTableBody"></tbody>
+            </table>
+        </div>
+
+        <h3>Last 7 Days</h3>
+        <div id="dailyClicks" class="bars"></div>
+    </section>
+</main>
+
+<script>
+const authPanel = document.getElementById("authPanel");
+const appPanel = document.getElementById("appPanel");
+const dashboard = document.getElementById("dashboard");
+const userArea = document.getElementById("userArea");
+const usernameInput = document.getElementById("username");
+const passwordInput = document.getElementById("password");
+const message = document.getElementById("message");
+const result = document.getElementById("result");
+const shortLink = document.getElementById("shortLink");
+const qrImage = document.getElementById("qrImage");
+const urlInput = document.getElementById("urlInput");
+
+function showMessage(text, type="error") {
+    message.textContent = text;
+    message.className = `message ${type}`;
+}
+function hideMessage() {
+    message.className = "message hidden";
+}
+
+async function api(url, options={}) {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Something went wrong");
+    return data;
+}
+
+async function refreshAuth() {
+    const me = await api("/api/me");
+    if (me.loggedIn) {
+        authPanel.classList.add("hidden");
+        appPanel.classList.remove("hidden");
+        dashboard.classList.remove("hidden");
+        userArea.innerHTML = `<span class="welcome">Hi, ${me.username}</span> <button id="logoutBtn" class="secondary">Logout</button>`;
+        document.getElementById("logoutBtn").onclick = logout;
+        loadAnalytics();
+    } else {
+        authPanel.classList.remove("hidden");
+        appPanel.classList.add("hidden");
+        dashboard.classList.add("hidden");
+        userArea.innerHTML = "";
+    }
+}
+
+async function login() {
+    try {
+        await api("/api/login", {
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({
+                username: usernameInput.value.trim(),
+                password: passwordInput.value
+            })
+        });
+        await refreshAuth();
+    } catch (e) {
+        alert(e.message);
+    }
+}
+
+async function register() {
+    try {
+        await api("/api/register", {
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({
+                username: usernameInput.value.trim(),
+                password: passwordInput.value
+            })
+        });
+        await refreshAuth();
+    } catch (e) {
+        alert(e.message);
+    }
+}
+
+async function logout() {
+    await api("/api/logout", {method:"POST"});
+    await refreshAuth();
+}
+
+document.getElementById("loginBtn").onclick = login;
+document.getElementById("registerBtn").onclick = register;
+
+document.getElementById("shortenForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    hideMessage();
+    result.classList.add("hidden");
+
+    try {
+        const data = await api("/api/urls", {
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({url:urlInput.value.trim()})
+        });
+
+        shortLink.href = data.shortUrl;
+        shortLink.textContent = data.shortUrl;
+        qrImage.src = data.qrCode;
+        result.classList.remove("hidden");
+        showMessage("Short URL created successfully.", "success");
+        urlInput.value = "";
+        loadAnalytics();
+    } catch (e) {
+        showMessage(e.message);
+    }
+});
+
+document.getElementById("copyBtn").onclick = async () => {
+    await navigator.clipboard.writeText(shortLink.href);
+    document.getElementById("copyBtn").textContent = "Copied";
+    setTimeout(() => document.getElementById("copyBtn").textContent = "Copy", 1000);
+};
+
+async function loadAnalytics() {
+    try {
+        const data = await api("/api/analytics");
+        document.getElementById("totalUrls").textContent = data.totalUrls;
+        document.getElementById("totalClicks").textContent = data.totalClicks;
+
+        const tbody = document.getElementById("urlTableBody");
+        if (!data.topUrls.length) {
+            tbody.innerHTML = `<tr><td colspan="3" class="empty">No URLs yet.</td></tr>`;
+        } else {
+            tbody.innerHTML = data.topUrls.map(item => `
+                <tr>
+                    <td><a href="/${item.short_code}" target="_blank">${item.short_code}</a></td>
+                    <td class="original-url"><a href="${item.original_url}" target="_blank">${item.original_url}</a></td>
+                    <td><span class="badge">${item.click_count}</span></td>
+                </tr>
+            `).join("");
+        }
+
+        const bars = document.getElementById("dailyClicks");
+        if (!data.dailyClicks.length) {
+            bars.innerHTML = `<div class="empty">No click data yet.</div>`;
+        } else {
+            const max = Math.max(...data.dailyClicks.map(x => x.clicks), 1);
+            bars.innerHTML = data.dailyClicks.map(row => `
+                <div class="bar-row">
+                    <span>${row.day}</span>
+                    <div class="bar-track">
+                        <div class="bar-fill" style="width:${(row.clicks/max)*100}%"></div>
+                    </div>
+                    <strong>${row.clicks}</strong>
+                </div>
+            `).join("");
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+document.getElementById("refreshBtn").onclick = loadAnalytics;
+refreshAuth();
+</script>
+</body>
+</html>
