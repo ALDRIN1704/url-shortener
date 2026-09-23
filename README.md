@@ -2060,7 +2060,7 @@ The finished project includes:
 ✔ Production Deployment
 👨‍💻 Author
 
-Your Name
+ALDRIN LIJO
 
 GitHub: https://github.com/ALDRIN1704
 
