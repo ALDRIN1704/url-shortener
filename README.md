@@ -88,7 +88,7 @@ Along with basic URL shortening, the application also supports:
 
 # 🏗️ System Architecture
 
-```text
+
                     ┌─────────────────┐
                     │      USER       │
                     └────────┬────────┘
