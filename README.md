@@ -1,138 +1,189 @@
-<div align="center">
+# URL Shortener — Flask + MySQL
 
-# 🔗 URL Shortener
+A full-stack URL shortening application built using **Python, Flask, MySQL, Docker, Railway, and Render**.
 
-### A full-stack URL shortening application with authentication, analytics, QR codes, and cloud deployment.
-
-Built using **Python • Flask • MySQL • Docker • Railway • Render**
-
-<br/>
-
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Open_App-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://url-shortener-prv0.onrender.com/)
-
-![Python](https://img.shields.io/badge/Python-3.12-blue?style=flat-square&logo=python&logoColor=white)
-![Flask](https://img.shields.io/badge/Flask-3.1-black?style=flat-square&logo=flask)
-![MySQL](https://img.shields.io/badge/MySQL-Database-blue?style=flat-square&logo=mysql&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-Containerized-blue?style=flat-square&logo=docker&logoColor=white)
-![Render](https://img.shields.io/badge/Render-Deployed-46E3B7?style=flat-square&logo=render&logoColor=white)
-![Railway](https://img.shields.io/badge/Railway-MySQL-purple?style=flat-square&logo=railway&logoColor=white)
-
-</div>
+The application allows authenticated users to generate short URLs, redirect visitors to original URLs, track clicks, view analytics, and generate QR codes for shortened links.
 
 ---
 
-# 🌐 Live Application
+## 🚀 Live Deployment
 
-## 🔗 [https://url-shortener-prv0.onrender.com/](https://url-shortener-prv0.onrender.com/)
+### URL Shortener Application
 
-> The application is deployed using Docker on Render and connected to a MySQL database hosted on Railway.
+**Live App:**  
+https://url-shortener-prv0.onrender.com/
 
----
+### Health Check
 
-# 📌 Project Overview
+**Health Endpoint:**  
+https://url-shortener-prv0.onrender.com/health
 
-This project is a complete **URL Shortener backend application** that allows users to convert long URLs into short, shareable links.
+### GitHub Repository
 
-Along with basic URL shortening, the application also supports:
+**Source Code:**  
+https://github.com/ALDRIN1704/url-shortener
 
-- 🔗 Short URL generation
-- ↪️ Automatic redirection
-- 📊 Click tracking
-- 📈 Analytics dashboard
-- 📱 QR code generation
-- 🔐 User registration and login
-- 👤 User-specific URLs
-- 🗃️ MySQL database storage
-- 🐳 Docker containerization
-- ☁️ Cloud deployment
+> The Flask application is containerized using Docker and deployed on Render.  
+> The production MySQL database is hosted on Railway.
 
 ---
 
-# ✨ Features
+## 📌 Overview
+
+This project is a full-stack **URL Shortener** application designed to demonstrate backend development, database modeling, API design, authentication, analytics, containerization, and cloud deployment.
+
+The application allows users to:
+
+- Register and log in
+- Submit a long URL
+- Generate a unique short URL
+- Generate a QR code for the short URL
+- Open the short URL and redirect to the original website
+- Track the number of times a short URL is opened
+- Store individual click events
+- View URL analytics from a dashboard
+- View only URLs created by their own account
+
+The project uses the following architecture:
+
+- **Python / Flask** — backend APIs, authentication, URL shortening, redirects, click tracking, analytics, and QR code generation
+- **MySQL** — stores users, shortened URLs, and click events
+- **HTML / CSS / JavaScript** — frontend interface and analytics dashboard
+- **Werkzeug** — password hashing and verification
+- **Gunicorn** — production WSGI server
+- **Docker** — application containerization
+- **Railway** — production MySQL database hosting
+- **Render** — production application hosting
+- **GitHub** — source-code management
+
+---
+
+## ✨ Key Features
 
 | Feature | Description |
 |---|---|
-| 🔗 URL Shortening | Converts long URLs into unique short links |
-| ↪️ Redirect | Redirects short links to their original destination |
-| 📊 Click Tracking | Tracks how many times each short URL is visited |
-| 📈 Analytics Dashboard | Shows total URLs, total clicks, and recent activity |
-| 📱 QR Code | Generates QR codes for shortened URLs |
-| 🔐 Authentication | Register, login, and logout functionality |
-| 👤 User URLs | Each user can only view their own URLs |
-| 🧾 Click History | Stores individual click events |
-| ✅ URL Validation | Rejects invalid URLs |
-| 🚫 Error Handling | Handles invalid short codes and database errors |
-| 🐳 Docker | Runs the application in a production container |
-| ☁️ Deployment | Flask app on Render and MySQL on Railway |
+| URL Shortening | Generates a unique 6-character code for a long URL |
+| Redirect Handling | Redirects a short URL to its original destination |
+| Click Tracking | Increments the click count whenever a shortened URL is opened |
+| Click History | Stores individual click events for analytics |
+| Analytics Dashboard | Displays total URLs, total clicks, top URLs, and recent click activity |
+| QR Code Generation | Generates a QR code for every shortened URL |
+| User Registration | Allows users to create an account |
+| User Login | Authenticates users using hashed passwords |
+| Session Authentication | Uses Flask sessions to maintain authenticated users |
+| User-specific URLs | Users can view only their own shortened URLs |
+| URL Validation | Accepts valid `http://` and `https://` URLs |
+| Error Handling | Handles invalid URLs, authentication errors, and unknown short codes |
+| Docker Support | Packages the application into a portable container |
+| Cloud Database | Uses Railway-hosted MySQL |
+| Cloud Deployment | Runs the Dockerized Flask application on Render |
 
 ---
 
-# 🛠️ Tech Stack
+## 🛠️ Tech Stack
 
-| Category | Technology |
+| Layer | Technology |
 |---|---|
-| Backend | Python |
-| Framework | Flask |
+| Backend Language | Python 3.12 |
+| Backend Framework | Flask 3.1 |
 | Database | MySQL |
+| Database Driver | `mysql-connector-python` |
 | Frontend | HTML, CSS, JavaScript |
 | Authentication | Flask Sessions |
 | Password Security | Werkzeug |
-| QR Generation | Python `qrcode` |
+| QR Code Generation | `qrcode` + Pillow |
 | Production Server | Gunicorn |
 | Containerization | Docker |
-| Database Hosting | Railway |
 | Application Hosting | Render |
-| Version Control | Git / GitHub |
+| Database Hosting | Railway |
+| Version Control | Git + GitHub |
 
 ---
 
-# 🏗️ System Architecture
+## 🏗️ System Architecture
 
+```text
+                     User
+                      |
+                      v
+              Render Web Service
+                      |
+                      v
+               Docker Container
+                      |
+                      v
+              Flask + Gunicorn
+                      |
+        +-------------+-------------+
+        |             |             |
+        v             v             v
+ Authentication   URL Service    Analytics
+        |             |             |
+        +-------------+-------------+
+                      |
+                      v
+               Railway MySQL
+                      |
+            +---------+---------+
+            |         |         |
+            v         v         v
+          users      urls     clicks
+```
 
-                    ┌─────────────────┐
-                    │      USER       │
-                    └────────┬────────┘
-                             │
-                             ▼
-                    ┌─────────────────┐
-                    │     RENDER      │
-                    │   Web Service   │
-                    └────────┬────────┘
-                             │
-                             ▼
-                    ┌─────────────────┐
-                    │     DOCKER      │
-                    │    Container    │
-                    └────────┬────────┘
-                             │
-                             ▼
-                    ┌─────────────────┐
-                    │ Flask + Gunicorn│
-                    └────────┬────────┘
-                             │
-            ┌────────────────┼────────────────┐
-            │                │                │
-            ▼                ▼                ▼
-      Authentication     URL Shortener     Analytics
-            │                │                │
-            └────────────────┼────────────────┘
-                             │
-                             ▼
-                    ┌─────────────────┐
-                    │ Railway MySQL   │
-                    └────────┬────────┘
-                             │
-                  ┌──────────┼──────────┐
-                  ▼          ▼          ▼
-                users       urls      clicks
-📁 Project Structure
+---
+
+## 🔄 Complete Application Flow
+
+```text
+User Registration / Login
+          |
+          v
+     Flask Session
+          |
+          v
+    Enter Long URL
+          |
+          v
+     URL Validation
+          |
+          v
+ Generate Unique Code
+          |
+          v
+   Save URL in MySQL
+          |
+          v
+Generate Short URL + QR
+          |
+          v
+ User Opens Short URL
+          |
+          v
+ Find Code in Database
+          |
+          v
+ Increment Click Count
+          |
+          v
+ Store Click Event
+          |
+          v
+ Redirect to Original URL
+          |
+          v
+   Analytics Dashboard
+```
+
+---
+
+## 📁 Project Structure
+
+```text
 url-shortener/
 │
 ├── app.py
-│
 ├── Dockerfile
 ├── .dockerignore
-│
 ├── requirements.txt
 ├── schema.sql
 ├── railway_schema.sql
@@ -143,1104 +194,76 @@ url-shortener/
 │
 └── static/
     └── style.css
-🚀 Implementation Flow
+```
 
-The project was developed step-by-step, starting with the core URL shortening functionality and then adding advanced features.
+---
 
-1️⃣ Database Design
+# ⚙️ Implementation
 
-The application uses three MySQL tables:
+## 1. Database Design
 
+The application uses three main MySQL tables:
+
+```text
 users
-   │
-   │ 1 user can create many URLs
-   ▼
+  |
+  | One user can create many URLs
+  v
 urls
-   │
-   │ 1 URL can receive many clicks
-   ▼
+  |
+  | One URL can have many click events
+  v
 clicks
-👤 Users Table
+```
 
-Stores registered users.
+This gives the following relationships:
 
-CREATE TABLE users (
+```text
+users 1 ------ N urls
+
+urls  1 ------ N clicks
+```
+
+---
+
+## 👤 Users Table
+
+The `users` table stores registered user accounts.
+
+```sql
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+```
 
 Passwords are never stored directly.
 
-Before storing a password, Flask uses Werkzeug:
+Before inserting a user, the password is hashed using Werkzeug:
 
+```python
 generate_password_hash(password)
+```
 
-During login:
+During login, the password is verified using:
 
+```python
 check_password_hash(
     user["password_hash"],
     password
 )
-🔗 URLs Table
+```
 
-Stores shortened URLs.
+---
 
-CREATE TABLE urls (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+## 🔗 URLs Table
 
-    user_id INT NOT NULL,
+The `urls` table stores shortened URLs.
 
-    short_code VARCHAR(20)
-        NOT NULL
-        UNIQUE,
-
-    original_url TEXT
-        NOT NULL,
-
-    click_count INT
-        NOT NULL
-        DEFAULT 0,
-
-    created_at TIMESTAMP
-        DEFAULT CURRENT_TIMESTAMP,
-
-    FOREIGN KEY (user_id)
-        REFERENCES users(id)
-        ON DELETE CASCADE
-);
-
-Each URL belongs to a specific user.
-
-🖱️ Clicks Table
-
-Stores every click event.
-
-CREATE TABLE clicks (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-
-    url_id INT NOT NULL,
-
-    clicked_at TIMESTAMP
-        DEFAULT CURRENT_TIMESTAMP,
-
-    ip_address VARCHAR(45),
-
-    user_agent TEXT,
-
-    referrer TEXT,
-
-    FOREIGN KEY (url_id)
-        REFERENCES urls(id)
-        ON DELETE CASCADE
-);
-
-This allows the application to support more advanced analytics in the future.
-
-2️⃣ Flask Backend
-
-The backend was implemented using Flask.
-
-from flask import Flask
-
-app = Flask(__name__)
-
-Flask handles:
-
-User Authentication
-        │
-        ▼
-URL Creation
-        │
-        ▼
-URL Redirection
-        │
-        ▼
-Click Tracking
-        │
-        ▼
-Analytics
-        │
-        ▼
-QR Code Generation
-3️⃣ Database Connection
-
-The application supports both:
-
-Local MySQL
-Production Railway MySQL
-
-For local development:
-
-DB_CONFIG = {
-    "host": "localhost",
-    "port": 3306,
-    "user": "root",
-    "password": "your_password",
-    "database": "url_shortener"
-}
-
-For production, the application checks:
-
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-Render stores the production Railway connection string inside:
-
-DATABASE_URL
-
-This keeps database credentials outside the source code.
-
-4️⃣ Short URL Generation
-
-When the user enters a long URL:
-
-https://example.com/some/very/long/path
-
-the backend generates a short code:
-
-aB91xZ
-
-The final short URL becomes:
-
-https://url-shortener-prv0.onrender.com/aB91xZ
-
-The short code and original URL are stored in MySQL.
-
-Short Code Generation
-
-A random combination of letters and numbers is generated:
-
-import random
-import string
-
-def generate_code(length=6):
-
-    characters = (
-        string.ascii_letters
-        + string.digits
-    )
-
-    return "".join(
-        random.choices(
-            characters,
-            k=length
-        )
-    )
-
-The database also has:
-
-UNIQUE
-
-on short_code to avoid duplicates.
-
-5️⃣ URL Redirect Flow
-
-When someone opens:
-
-https://url-shortener-prv0.onrender.com/aB91xZ
-
-the application performs:
-
-Short URL
-    │
-    ▼
-Read short_code
-    │
-    ▼
-Search MySQL
-    │
-    ├───────────────┐
-    │               │
-  Found          Not Found
-    │               │
-    ▼               ▼
-Update Clicks       404
-    │
-    ▼
-Store Click Event
-    │
-    ▼
-Redirect
-    │
-    ▼
-Original Website
-6️⃣ Click Tracking
-
-Every time a short link is opened:
-
-UPDATE urls
-SET click_count = click_count + 1
-WHERE id = ?;
-
-The application also stores the click event:
-
-INSERT INTO clicks (
-    url_id,
-    ip_address,
-    user_agent,
-    referrer
-)
-VALUES (?, ?, ?, ?);
-Why Store Both?
-
-The urls table stores:
-
-click_count
-
-for fast access.
-
-The clicks table stores:
-
-every individual click
-
-for detailed analytics.
-
-This gives both performance and flexibility.
-
-7️⃣ Analytics Dashboard
-
-The analytics dashboard displays:
-
-Total URLs
-Total Clicks
-Top URLs
-Recent Click Activity
-
-Example SQL:
-
-SELECT
-    COUNT(*) AS total_urls,
-    COALESCE(
-        SUM(click_count),
-        0
-    ) AS total_clicks
-FROM urls
-WHERE user_id = ?;
-
-Daily click analytics are generated from:
-
-clicks.clicked_at
-
-using:
-
-GROUP BY DATE(clicked_at)
-8️⃣ QR Code Generation
-
-The project uses:
-
-qrcode
-Pillow
-
-QR generation:
-
-import qrcode
-
-img = qrcode.make(short_url)
-
-The QR code is converted into Base64 and returned to the frontend.
-
-This means QR images do not need to be stored as physical files.
-
-9️⃣ User Authentication
-
-The application supports:
-
-Register
-Login
-Logout
-Registration Flow
-Username + Password
-        │
-        ▼
-Validate Input
-        │
-        ▼
-Hash Password
-        │
-        ▼
-Save User
-        │
-        ▼
-Create Session
-Login Flow
-Username + Password
-        │
-        ▼
-Find User
-        │
-        ▼
-Check Password Hash
-        │
-        ▼
-Create Flask Session
-        │
-        ▼
-Logged In
-
-Flask stores:
-
-session["user_id"] = user["id"]
-
-Each URL is linked to:
-
-user_id
-
-so users only see their own URLs.
-
-🔌 API Endpoints
-Authentication
-Register
-POST /api/register
-
-Request:
-
-{
-    "username": "demo",
-    "password": "password123"
-}
-Login
-POST /api/login
-Logout
-POST /api/logout
-Current User
-GET /api/me
-🔗 URL APIs
-Create Short URL
-POST /api/urls
-
-Request:
-
-{
-    "url": "https://www.google.com"
-}
-
-Response:
-
-{
-    "shortCode": "Ab12Cd",
-
-    "shortUrl":
-    "https://url-shortener-prv0.onrender.com/Ab12Cd",
-
-    "originalUrl":
-    "https://www.google.com",
-
-    "qrCode":
-    "data:image/png;base64,..."
-}
-Get User URLs
-GET /api/urls
-Get URL Statistics
-GET /api/urls/<short_code>/stats
-Analytics Dashboard
-GET /api/analytics
-Redirect
-GET /<short_code>
-Health Check
-GET /health
-
-Response:
-
-{
-    "status": "ok"
-}
-💻 Local Setup
-1️⃣ Clone Repository
-git clone YOUR_GITHUB_REPOSITORY_URL
-
-cd url-shortener
-2️⃣ Install Dependencies
-pip install -r requirements.txt
-3️⃣ Create MySQL Database
-
-Open MySQL Workbench.
-
-Run:
-
-CREATE DATABASE url_shortener;
-
-Then:
-
-USE url_shortener;
-
-Run:
-
-schema.sql
-
-Verify:
-
-SHOW TABLES;
-
-Expected:
-
-users
-urls
-clicks
-4️⃣ Configure Database
-
-Environment variables:
-
-DB_HOST=localhost
-
-DB_PORT=3306
-
-DB_USER=root
-
-DB_PASSWORD=your_password
-
-DB_NAME=url_shortener
-
-SECRET_KEY=your_secret_key
-5️⃣ Run Flask
-python app.py
-
-Open:
-
-http://localhost:5000
-🐳 Docker Implementation
-
-Docker was added so the application behaves consistently in both local and production environments.
-
-Dockerfile
-FROM python:3.12-slim
-
-WORKDIR /app
-
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-COPY requirements.txt .
-
-RUN pip install \
-    --no-cache-dir \
-    -r requirements.txt
-
-COPY . .
-
-CMD [
-    "sh",
-    "-c",
-    "gunicorn --bind 0.0.0.0:${PORT:-10000} app:app"
-]
-Build Docker Image
-docker build \
--t url-shortener \
-.
-Verify Docker Image
-docker images
-
-Expected:
-
-REPOSITORY        TAG
-url-shortener     latest
-Run Docker Locally
-
-For Windows:
-
-docker run `
---name url-shortener-app `
--p 10000:10000 `
--e DB_HOST=host.docker.internal `
--e DB_PORT=3306 `
--e DB_USER=root `
--e DB_PASSWORD="YOUR_PASSWORD" `
--e DB_NAME=url_shortener `
--e SECRET_KEY="local-secret" `
-url-shortener
-
-Open:
-
-http://localhost:10000
-☁️ Deployment Architecture
-
-The application is deployed using:
-
-                     GitHub
-                       │
-                       ▼
-                     Render
-                       │
-                       ▼
-                 Docker Container
-                       │
-                       ▼
-                Flask + Gunicorn
-                       │
-                       ▼
-                   Railway
-                     MySQL
-🚂 Railway MySQL Deployment
-Step 1
-
-Create a new Railway project.
-
-Add:
-
-Database
-    ↓
-MySQL
-
-Railway automatically provisions MySQL.
-
-Step 2
-
-Open:
-
-MySQL Service
-    ↓
-Settings
-    ↓
-Networking
-    ↓
-Public Access
-
-Enable the TCP proxy.
-
-Application port:
-
-3306
-
-Railway generates:
-
-MYSQL_PUBLIC_URL
-Step 3
-
-Create the production tables.
-
-Use:
-
-railway_schema.sql
-
-Run:
-
-SHOW TABLES;
-
-Expected:
-
-clicks
-urls
-users
-🌐 Render Deployment
-Step 1 — Push to GitHub
-git init
-
-git add .
-
-git commit \
--m "Complete URL Shortener"
-
-git branch \
--M main
-
-git remote add origin \
-YOUR_GITHUB_REPOSITORY_URL
-
-git push \
--u origin main
-Step 2 — Create Render Web Service
-
-In Render:
-
-New
- ↓
-Web Service
- ↓
-Connect GitHub
- ↓
-Select Repository
-
-Choose:
-
-Runtime: Docker
-
-Render automatically detects:
-
-Dockerfile
-Step 3 — Environment Variables
-
-Inside:
-
-Render
- ↓
-Environment
-
-add:
-
-DATABASE_URL
-
-SECRET_KEY
-DATABASE_URL
-
-Copy Railway:
-
-MYSQL_PUBLIC_URL
-
-into Render:
-
-DATABASE_URL
-
-Example format:
-
-mysql://username:password@host:port/database
-SECRET_KEY
-
-Generate:
-
-python -c \
-"import secrets; print(secrets.token_hex(32))"
-
-Add the generated value to Render.
-
-Step 4 — Deploy
-
-Render performs:
-
-GitHub
-   │
-   ▼
-Read Dockerfile
-   │
-   ▼
-Build Docker Image
-   │
-   ▼
-Install Python Packages
-   │
-   ▼
-Start Gunicorn
-   │
-   ▼
-Flask Application
-   │
-   ▼
-Connect Railway MySQL
-
-Gunicorn starts with:
-
-0.0.0.0:$PORT
-
-This allows Render to expose the Docker container publicly.
-
-🎉 Deployment Result
-
-The application is live at:
-
-🌐 https://url-shortener-prv0.onrender.com/
-
-Production environment:
-
-HTML / CSS / JavaScript
-          │
-          ▼
-       Flask
-          │
-          ▼
-      Gunicorn
-          │
-          ▼
-       Docker
-          │
-          ▼
-       Render
-          │
-          ▼
-   Railway MySQL
-🧪 Production Testing Flow
-
-The final application was tested using the following flow:
-
-Open Application
-       │
-       ▼
-Register User
-       │
-       ▼
-Login
-       │
-       ▼
-Enter Long URL
-       │
-       ▼
-Generate Short URL
-       │
-       ▼
-Generate QR Code
-       │
-       ▼
-Open Short URL
-       │
-       ▼
-Track Click
-       │
-       ▼
-Store Click in MySQL
-       │
-       ▼
-Refresh Dashboard
-       │
-       ▼
-Updated Analytics
-🔐 Security
-
-The application follows several basic security practices.
-
-✔ Password hashing
-
-✔ Environment variables
-
-✔ Parameterized SQL queries
-
-✔ Flask session authentication
-
-✔ Unique short codes
-
-✔ User-specific URL ownership
-
-✔ Credentials excluded from source code
-📈 Future Improvements
-
-Possible future enhancements:
-
-Custom URL aliases
-
-URL expiration
-
-Email verification
-
-Password reset
-
-Rate limiting
-
-Redis caching
-
-Custom domains
-
-Geographical analytics
-
-Browser analytics
-
-Device analytics
-
-Downloadable QR codes
-
-Docker Compose
-
-Automated tests
-
-CI/CD pipeline
-
-Admin dashboard
-
-API keys
-
-Background analytics processing
-🎯 Concepts Demonstrated
-
-This project demonstrates practical knowledge of:
-
-Python Backend Development
-
-Flask Framework
-
-REST APIs
-
-MySQL Database Design
-
-Relational Database Relationships
-
-Authentication
-
-Password Hashing
-
-Sessions
-
-URL Redirection
-
-Click Tracking
-
-Analytics
-
-QR Code Generation
-
-Environment Variables
-
-Docker
-
-Gunicorn
-
-Railway
-
-Render
-
-Git / GitHub
-
-Cloud Deployment
-🔄 Complete Project Flow
-Long URL
-   │
-   ▼
-Flask Backend
-   │
-   ▼
-Generate Unique Code
-   │
-   ▼
-Store in MySQL
-   │
-   ▼
-Return Short URL + QR
-   │
-   ▼
-User Opens Short URL
-   │
-   ▼
-Flask Finds Original URL
-   │
-   ▼
-Increment Click Count
-   │
-   ▼
-Store Click Event
-   │
-   ▼
-Redirect User
-   │
-   ▼
-Analytics Dashboard Updated
-📚 What I Learned
-
-Through this project I implemented a complete backend system starting from database design and API development to Docker containerization and cloud deployment.
-
-The project helped me understand how a real application moves through:
-
-Development
-    ↓
-Database Design
-    ↓
-Backend APIs
-    ↓
-Authentication
-    ↓
-Testing
-    ↓
-Docker
-    ↓
-Cloud Database
-    ↓
-Cloud Deployment
-    ↓
-Production
-👨‍💻 Author
-
-Your Name
-
-GitHub: https://github.com/YOUR_USERNAME
-
-<div align="center">
-⭐ URL Shortener
-
-Python • Flask • MySQL • Docker • Railway • Render
-
-<br/>
-🔗 Open Live Application
-<br/>
-
-Built as a backend development assessment project.
-
-</div> ```
-
-Replace only these two placeholders before pushing:
-
-YOUR_GITHUB_REPOSITORY_URL
-YOUR_USERNAME
-
-This version will look much cleaner on GitHub because it has a centered header, badges, architecture diagrams, tables, implementation flow, Docker + Railway + Render deployment steps, API documentation, security notes, and a clear end-to-end explanation.
-
-give full readme.md
-
-Done — here is the full polished README.md file:
-
-Download the complete README.md
-
-It includes the live deployment link, project overview, features, architecture, database design, implementation flow, API documentation, local setup, Docker setup, Railway MySQL deployment, Render deployment, security notes, testing flow, and future improvements. 
-
-README.md
-Document
-
-Library
-/
-README.md
-
-<div align="center">
-
-🔗 URL Shortener
-A full-stack URL shortening application with authentication, analytics, QR codes, and cloud deployment.
-
-Built using Python • Flask • MySQL • Docker • Railway • Render
-
-<br/>
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-
-🌐 Live Application
-🔗 https://url-shortener-prv0.onrender.com/
-
-The application is deployed using Docker on Render and connected to a MySQL database hosted on Railway.
-
-📌 Project Overview
-
-This project is a complete URL Shortener web application that allows users to convert long URLs into short, shareable links.
-
-Along with the core URL shortening functionality, the project includes:
-
-🔗 Short URL generation
-↪️ URL redirection
-📊 Click tracking
-📈 Analytics dashboard
-📱 QR code generation
-🔐 User authentication
-👤 User-specific links
-🗃️ MySQL database storage
-🐳 Docker containerization
-☁️ Cloud deployment
-
-The main goal of the project was to demonstrate backend development skills including API design, database modeling, authentication, analytics, containerization, and deployment.
-
-✨ Features
-Feature	Description
-🔗 URL Shortening	Converts long URLs into unique short links
-↪️ Redirect	Redirects short links to the original destination
-📊 Click Tracking	Tracks how many times each short URL is visited
-📈 Analytics Dashboard	Shows total URLs, total clicks, and recent activity
-📱 QR Code Generation	Generates a QR code for every short URL
-🔐 Authentication	Register, login, and logout functionality
-👤 User-specific URLs	Each user can only access their own URLs
-🧾 Click History	Stores individual click events
-✅ URL Validation	Rejects invalid URLs
-🚫 Error Handling	Handles invalid short codes and database errors
-🐳 Docker Support	Runs consistently inside a production container
-☁️ Cloud Deployment	Flask app on Render and MySQL on Railway
-🛠️ Tech Stack
-Category	Technology
-Backend	Python
-Web Framework	Flask
-Database	MySQL
-Frontend	HTML, CSS, JavaScript
-Authentication	Flask Sessions
-Password Security	Werkzeug
-QR Generation	qrcode + Pillow
-Production Server	Gunicorn
-Containerization	Docker
-Database Hosting	Railway
-Application Hosting	Render
-Version Control	Git / GitHub
-🏗️ System Architecture
-                    ┌─────────────────┐
-                    │      USER       │
-                    └────────┬────────┘
-                             │
-                             ▼
-                    ┌─────────────────┐
-                    │     RENDER      │
-                    │   Web Service   │
-                    └────────┬────────┘
-                             │
-                             ▼
-                    ┌─────────────────┐
-                    │     DOCKER      │
-                    │    Container    │
-                    └────────┬────────┘
-                             │
-                             ▼
-                    ┌─────────────────┐
-                    │ Flask + Gunicorn│
-                    └────────┬────────┘
-                             │
-            ┌────────────────┼────────────────┐
-            │                │                │
-            ▼                ▼                ▼
-      Authentication     URL Shortener     Analytics
-            │                │                │
-            └────────────────┼────────────────┘
-                             │
-                             ▼
-                    ┌─────────────────┐
-                    │ Railway MySQL   │
-                    └────────┬────────┘
-                             │
-                  ┌──────────┼──────────┐
-                  ▼          ▼          ▼
-                users       urls      clicks
-📁 Project Structure
-url-shortener/
-│
-├── app.py
-├── Dockerfile
-├── .dockerignore
-├── requirements.txt
-├── schema.sql
-├── railway_schema.sql
-├── README.md
-│
-├── templates/
-│   └── index.html
-│
-└── static/
-    └── style.css
-🚀 Implementation Flow
-
-The project was developed in small stages. The core backend functionality was completed first, and then authentication, analytics, QR codes, Docker, and deployment were added.
-
-1️⃣ Database Design
-
-The application uses three MySQL tables:
-
-users
-   │
-   │ one user can create many URLs
-   ▼
-urls
-   │
-   │ one URL can receive many clicks
-   ▼
-clicks
-👤 users Table
-
-The users table stores registered users.
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-Passwords are never stored as plain text.
-
-Werkzeug is used to hash passwords before saving them:
-
-generate_password_hash(password)
-
-During login, the password is checked using:
-
-check_password_hash(user["password_hash"], password)
-🔗 urls Table
-
-The urls table stores shortened URLs.
-
-CREATE TABLE urls (
+```sql
+CREATE TABLE IF NOT EXISTS urls (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     short_code VARCHAR(20) NOT NULL UNIQUE,
@@ -1248,20 +271,31 @@ CREATE TABLE urls (
     click_count INT NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    FOREIGN KEY (user_id)
+    CONSTRAINT fk_urls_user
+        FOREIGN KEY (user_id)
         REFERENCES users(id)
         ON DELETE CASCADE
 );
+```
 
-Each URL belongs to one authenticated user.
+The table stores:
 
-The short_code column is marked as UNIQUE so that duplicate short codes cannot be stored.
+- URL owner
+- Short code
+- Original URL
+- Total click count
+- Creation timestamp
 
-🖱️ clicks Table
+The `short_code` column uses a `UNIQUE` constraint to prevent duplicate shortened URLs.
 
-The clicks table stores every click event.
+---
 
-CREATE TABLE clicks (
+## 🖱️ Clicks Table
+
+The `clicks` table stores individual click events.
+
+```sql
+CREATE TABLE IF NOT EXISTS clicks (
     id INT AUTO_INCREMENT PRIMARY KEY,
     url_id INT NOT NULL,
     clicked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -1269,355 +303,892 @@ CREATE TABLE clicks (
     user_agent TEXT,
     referrer TEXT,
 
-    FOREIGN KEY (url_id)
+    CONSTRAINT fk_clicks_url
+        FOREIGN KEY (url_id)
         REFERENCES urls(id)
         ON DELETE CASCADE
 );
+```
 
-This makes it possible to build more advanced analytics later, such as:
+Each click can store:
 
-clicks by date
-clicks by browser
-referrer tracking
-device information
-geographic analytics
-2️⃣ Flask Backend
+- URL ID
+- Timestamp
+- IP address
+- Browser/User-Agent information
+- Referrer
 
-The backend was implemented using Flask.
+This design allows more advanced analytics to be added later.
 
+---
+
+## 📇 Database Indexes
+
+Indexes are created for fields that are queried frequently.
+
+```sql
+CREATE INDEX idx_urls_short_code
+ON urls(short_code);
+
+CREATE INDEX idx_urls_user_id
+ON urls(user_id);
+
+CREATE INDEX idx_clicks_url_id
+ON clicks(url_id);
+
+CREATE INDEX idx_clicks_clicked_at
+ON clicks(clicked_at);
+```
+
+These indexes improve lookup and analytics performance.
+
+---
+
+# 2. Flask Backend
+
+The backend is implemented using Flask.
+
+```python
 from flask import Flask
 
 app = Flask(__name__)
+```
 
-Flask handles:
+The backend handles:
 
+```text
 Authentication
-      ↓
+      |
+      v
 URL Creation
-      ↓
+      |
+      v
 URL Redirection
-      ↓
+      |
+      v
 Click Tracking
-      ↓
+      |
+      v
 Analytics
-      ↓
+      |
+      v
 QR Code Generation
+```
 
-The backend communicates with MySQL using mysql-connector-python.
+The application communicates with MySQL using:
 
-3️⃣ Database Connection
+```text
+mysql-connector-python
+```
 
-The application supports both local development and production deployment.
+---
 
-Local Development
+# 3. Database Configuration
 
-For local development, the application uses environment variables such as:
+The same application supports both local and production databases.
 
+## Local Development
+
+For local development, the application reads:
+
+```text
+DB_HOST
+DB_PORT
+DB_USER
+DB_PASSWORD
+DB_NAME
+```
+
+Example:
+
+```text
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
 DB_PASSWORD=your_password
 DB_NAME=url_shortener
-Production
+```
 
-In production, the application reads:
+---
 
+## Production
+
+For production, the application reads:
+
+```python
 DATABASE_URL = os.getenv("DATABASE_URL")
+```
 
-The value of DATABASE_URL is the public Railway MySQL connection URL.
+If `DATABASE_URL` is available, Flask extracts the database configuration from the Railway connection URL.
 
-This makes it possible to use the same code locally and in production without storing database credentials inside the source code.
+```python
+parsed_db = urlparse(DATABASE_URL)
 
-4️⃣ Short URL Generation
+DB_CONFIG = {
+    "host": parsed_db.hostname,
+    "port": parsed_db.port or 3306,
+    "user": unquote(parsed_db.username or ""),
+    "password": unquote(parsed_db.password or ""),
+    "database": parsed_db.path.lstrip("/")
+}
+```
 
-When a user enters a long URL:
+This allows the same application to use:
 
-https://example.com/some/very/long/path
+```text
+Local MySQL
+```
 
-the backend generates a random short code:
+during development and:
 
-aB91xZ
+```text
+Railway MySQL
+```
 
-The final short URL becomes:
+in production.
 
-https://url-shortener-prv0.onrender.com/aB91xZ
+Sensitive database credentials are therefore not hard-coded into the source code.
 
-The original URL and short code are then stored in MySQL.
+---
 
-Short Code Generation
+# 4. URL Validation
 
-A random combination of letters and numbers is generated:
+Before creating a shortened URL, the application validates the submitted URL.
 
-import random
-import string
+```python
+def is_valid_url(value):
+    try:
+        parsed = urlparse(value)
 
+        return (
+            parsed.scheme in ("http", "https")
+            and bool(parsed.netloc)
+        )
+
+    except Exception:
+        return False
+```
+
+Only valid HTTP and HTTPS URLs are accepted.
+
+---
+
+# 5. Short Code Generation
+
+The application generates a random 6-character code using uppercase letters, lowercase letters, and numbers.
+
+```python
 def generate_code(length=6):
-    characters = string.ascii_letters + string.digits
+    chars = string.ascii_letters + string.digits
+
     return "".join(
-        random.choices(characters, k=length)
+        random.choices(chars, k=length)
     )
+```
 
-The database also has a UNIQUE constraint on short_code.
+Example:
 
-5️⃣ URL Redirect Flow
+```text
+aB91xZ
+```
 
-When someone opens a short URL, the backend extracts the short code and searches for it in MySQL.
+Before using the code, the application checks whether it already exists.
 
+```text
+Generate Code
+      |
+      v
+Check Database
+      |
+  +---+---+
+  |       |
+Exists   Unique
+  |       |
+  v       v
+Retry    Use Code
+```
+
+The application attempts to generate a unique code several times before returning an error.
+
+---
+
+# 6. Short URL Creation
+
+A logged-in user submits:
+
+```json
+{
+  "url": "https://www.example.com/some/very/long/path"
+}
+```
+
+The backend:
+
+```text
+1. Checks authentication
+2. Validates the URL
+3. Generates a unique short code
+4. Stores it in MySQL
+5. Builds the short URL
+6. Generates a QR code
+7. Returns the result
+```
+
+Example:
+
+```text
+Original URL:
+
+https://www.example.com/some/very/long/path
+
+                |
+                v
+
+Short Code:
+
+Ab12Cd
+
+                |
+                v
+
+Short URL:
+
+https://url-shortener-prv0.onrender.com/Ab12Cd
+```
+
+---
+
+# 7. Redirect Handling
+
+When a visitor opens:
+
+```text
+https://url-shortener-prv0.onrender.com/Ab12Cd
+```
+
+Flask executes the redirect route:
+
+```text
+GET /<short_code>
+```
+
+The flow is:
+
+```text
 Short URL
-    │
-    ▼
-Read short_code
-    │
-    ▼
+    |
+    v
+Extract short_code
+    |
+    v
 Search MySQL
-    │
-    ├───────────────┐
-    │               │
-  Found          Not Found
-    │               │
-    ▼               ▼
-Update Clicks      404
-    │
-    ▼
-Store Click Event
-    │
-    ▼
-Redirect
-    │
-    ▼
-Original Website
+    |
+ +--+----------------+
+ |                   |
+Found             Not Found
+ |                   |
+ v                   v
+Update Click         404
+ |
+ v
+Insert Click Event
+ |
+ v
+Commit Transaction
+ |
+ v
+Redirect to Original URL
+```
 
-The Flask redirect route performs the following steps:
+If the short code does not exist:
 
-1. Find the URL using short_code
-2. Return 404 if the code does not exist
-3. Increment the URL's click counter
-4. Store a new click event
-5. Redirect to the original URL
-6️⃣ Click Tracking
+```json
+{
+  "error": "Short URL not found"
+}
+```
 
-Every time a short link is opened, the application updates:
+is returned with HTTP status `404`.
 
+---
+
+# 8. Click Tracking
+
+Each successful redirect updates the total click counter:
+
+```sql
 UPDATE urls
 SET click_count = click_count + 1
-WHERE id = ?;
+WHERE id = %s;
+```
 
-It also records an individual click event:
+A detailed click record is also inserted:
 
+```sql
 INSERT INTO clicks (
     url_id,
     ip_address,
     user_agent,
     referrer
 )
-VALUES (?, ?, ?, ?);
-Why Store Both?
+VALUES (%s, %s, %s, %s);
+```
 
-The urls table stores:
+---
 
-click_count
+## Why Store Both `click_count` and `clicks`?
 
-This allows the application to quickly display the total number of clicks.
+The application stores analytics in two ways.
 
-The clicks table stores:
+### Aggregate Counter
 
-every individual click
+```text
+urls.click_count
+```
 
-This allows detailed analytics to be generated later.
+is used for quick total-click retrieval.
 
-7️⃣ Analytics Dashboard
+### Individual Click Events
 
-The analytics dashboard displays:
+```text
+clicks
+```
 
-total number of URLs
-total number of clicks
-top-performing URLs
-recent click activity
+stores detailed history.
 
-Example aggregation query:
+This makes the design both efficient and flexible.
 
+---
+
+# 9. Analytics Dashboard
+
+The application includes an authenticated analytics dashboard.
+
+It displays:
+
+- Total URLs created by the user
+- Total clicks
+- Top 5 URLs
+- Click activity for the last 7 days
+
+---
+
+## Total URLs and Clicks
+
+The backend uses:
+
+```sql
 SELECT
     COUNT(*) AS total_urls,
     COALESCE(SUM(click_count), 0) AS total_clicks
 FROM urls
-WHERE user_id = ?;
+WHERE user_id = %s;
+```
 
-Daily click activity is calculated from the clicks table using:
+---
 
-GROUP BY DATE(clicked_at)
+## Top URLs
 
-Flow:
+The top-performing links are retrieved using:
 
+```sql
+SELECT
+    short_code,
+    original_url,
+    click_count
+FROM urls
+WHERE user_id = %s
+ORDER BY
+    click_count DESC,
+    created_at DESC
+LIMIT 5;
+```
+
+---
+
+## Last 7 Days Analytics
+
+Daily click activity is calculated using:
+
+```sql
+SELECT
+    DATE(c.clicked_at) AS day,
+    COUNT(*) AS clicks
+FROM clicks c
+JOIN urls u
+    ON u.id = c.url_id
+WHERE
+    u.user_id = %s
+    AND c.clicked_at >= DATE_SUB(
+        CURDATE(),
+        INTERVAL 6 DAY
+    )
+GROUP BY DATE(c.clicked_at)
+ORDER BY day ASC;
+```
+
+The analytics flow is:
+
+```text
 clicks table
-    │
-    ▼
-SQL aggregation
-    │
-    ▼
-Analytics API
-    │
-    ▼
-Dashboard
-8️⃣ QR Code Generation
+     |
+     v
+SQL Aggregation
+     |
+     v
+/api/analytics
+     |
+     v
+Frontend Dashboard
+```
 
-Every generated short URL also receives a QR code.
+---
+
+# 10. QR Code Generation
+
+Every shortened URL also receives a QR code.
 
 The project uses:
 
+```text
 qrcode
 Pillow
+```
 
-Example:
+The QR code is created using:
 
-import qrcode
-
+```python
 img = qrcode.make(short_url)
+```
 
-The generated image is converted to Base64 and returned to the frontend.
+The image is stored temporarily in memory:
 
-This means QR images do not need to be stored as files on the server.
+```python
+buffer = io.BytesIO()
+```
 
-9️⃣ User Authentication
+It is then converted into Base64:
 
-The application supports:
+```python
+encoded = base64.b64encode(
+    buffer.getvalue()
+).decode("utf-8")
+```
 
+The frontend receives:
+
+```text
+data:image/png;base64,...
+```
+
+This means QR image files do not need to be stored on the server.
+
+---
+
+# 11. User Authentication
+
+Authentication uses:
+
+```text
+Flask Sessions
++
+Werkzeug Password Hashing
+```
+
+The application provides:
+
+```text
 Register
 Login
 Logout
-Registration Flow
+Current User Check
+```
+
+---
+
+## Registration Flow
+
+```text
 Username + Password
-        │
-        ▼
-Validate Input
-        │
-        ▼
+        |
+        v
+Validate Username
+        |
+        v
+Validate Password
+        |
+        v
+Check Existing User
+        |
+        v
 Hash Password
-        │
-        ▼
-Save User in MySQL
-        │
-        ▼
+        |
+        v
+Insert User
+        |
+        v
 Create Session
-Login Flow
+```
+
+The application requires:
+
+```text
+Username: minimum 3 characters
+
+Password: minimum 6 characters
+```
+
+---
+
+## Login Flow
+
+```text
 Username + Password
-        │
-        ▼
+        |
+        v
 Find User
-        │
-        ▼
-Check Password Hash
-        │
-        ▼
-Create Flask Session
-        │
-        ▼
-Logged In
+        |
+        v
+Verify Password Hash
+        |
+        +-------------+
+        |             |
+     Invalid        Valid
+        |             |
+        v             v
+       401       Create Session
+                      |
+                      v
+                  Logged In
+```
 
-After successful login:
+After successful authentication:
 
+```python
 session["user_id"] = user["id"]
+session["username"] = user["username"]
+```
 
-Each shortened URL stores the user ID, so every user sees only the links created from their own account.
+---
 
-🔌 API Endpoints
-Authentication APIs
-Register
+## Logout Flow
+
+Logout clears the session:
+
+```python
+session.clear()
+```
+
+---
+
+# 🔌 API Endpoints
+
+## Authentication APIs
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/register` | Register a user |
+| POST | `/api/login` | Login |
+| POST | `/api/logout` | Logout |
+| GET | `/api/me` | Get current authentication status |
+
+---
+
+## URL APIs
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/urls` | Create a shortened URL |
+| GET | `/api/urls` | List URLs belonging to authenticated user |
+| GET | `/api/urls/<short_code>/stats` | Get detailed statistics for a URL |
+| GET | `/<short_code>` | Redirect to original URL |
+
+---
+
+## Analytics API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/analytics` | Get dashboard analytics |
+
+---
+
+## Health API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/health` | Check whether the application is running |
+
+---
+
+# 🧪 API Examples
+
+## Register
+
+```http
 POST /api/register
+Content-Type: application/json
+```
 
-Example request:
+Request:
 
+```json
 {
-    "username": "demo",
-    "password": "password123"
+  "username": "aldrin",
+  "password": "password123"
 }
-Login
+```
+
+Example response:
+
+```json
+{
+  "message": "Registration successful",
+  "username": "aldrin"
+}
+```
+
+---
+
+## Login
+
+```http
 POST /api/login
-Logout
-POST /api/logout
-Current User
-GET /api/me
-URL APIs
-Create Short URL
+Content-Type: application/json
+```
+
+Request:
+
+```json
+{
+  "username": "aldrin",
+  "password": "password123"
+}
+```
+
+Example response:
+
+```json
+{
+  "message": "Login successful",
+  "username": "aldrin"
+}
+```
+
+---
+
+## Create Short URL
+
+```http
 POST /api/urls
+Content-Type: application/json
+```
 
-Example request:
+Request:
 
+```json
 {
-    "url": "https://www.google.com"
+  "url": "https://www.google.com"
 }
+```
 
 Example response:
 
+```json
 {
-    "shortCode": "Ab12Cd",
-    "shortUrl": "https://url-shortener-prv0.onrender.com/Ab12Cd",
-    "originalUrl": "https://www.google.com",
-    "qrCode": "data:image/png;base64,..."
+  "shortCode": "Ab12Cd",
+  "shortUrl": "https://url-shortener-prv0.onrender.com/Ab12Cd",
+  "originalUrl": "https://www.google.com",
+  "qrCode": "data:image/png;base64,..."
 }
-Get User URLs
-GET /api/urls
-Get URL Statistics
-GET /api/urls/<short_code>/stats
-Analytics Dashboard
+```
+
+---
+
+## Get Analytics
+
+```http
 GET /api/analytics
-Redirect
-GET /<short_code>
-Health Check
-GET /health
+```
 
 Example response:
 
+```json
 {
-    "status": "ok"
+  "totalUrls": 5,
+  "totalClicks": 27,
+  "topUrls": [],
+  "dailyClicks": []
 }
-💻 Running the Project Locally
-1️⃣ Clone the Repository
-git clone YOUR_GITHUB_REPOSITORY_URL
+```
+
+---
+
+## Health Check
+
+```http
+GET /health
+```
+
+Response:
+
+```json
+{
+  "status": "ok"
+}
+```
+
+---
+
+# 💻 Running Locally
+
+## Prerequisites
+
+Install:
+
+- Python 3.12 or compatible version
+- MySQL
+- Git
+- pip
+
+Docker is optional for normal local development.
+
+---
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/ALDRIN1704/url-shortener.git
 cd url-shortener
-2️⃣ Install Dependencies
+```
+
+---
+
+## 2. Install Dependencies
+
+```bash
 pip install -r requirements.txt
-3️⃣ Create the Local MySQL Database
+```
 
-Open MySQL Workbench and run:
+Current dependencies:
 
+```text
+Flask==3.1.0
+mysql-connector-python==9.2.0
+qrcode[pil]==8.0
+gunicorn==23.0.0
+```
+
+---
+
+## 3. Create the Local MySQL Database
+
+Open MySQL Workbench.
+
+Run:
+
+```sql
 CREATE DATABASE url_shortener;
+
 USE url_shortener;
+```
 
-Then execute:
+Then execute the project's:
 
+```text
 schema.sql
+```
 
-Verify:
+Verify the tables:
 
+```sql
 SHOW TABLES;
+```
 
 Expected:
 
+```text
 users
 urls
 clicks
-4️⃣ Configure Local Database Variables
+```
 
-Example environment variables:
+---
 
+## 4. Configure Environment Variables
+
+For local development:
+
+```text
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
-DB_PASSWORD=your_password
+DB_PASSWORD=your_mysql_password
 DB_NAME=url_shortener
 SECRET_KEY=your_secret_key
-5️⃣ Start Flask
+```
+
+---
+
+## 5. Run the Application
+
+```bash
 python app.py
+```
 
-Open:
+The development server runs at:
 
+```text
 http://localhost:5000
-🐳 Docker Implementation
+```
 
-Docker was added so the application behaves consistently in development and production.
+---
 
-The project uses the following Dockerfile:
+## 6. Test the Application
 
+Test the following flow:
+
+```text
+Register
+   |
+   v
+Login
+   |
+   v
+Create Short URL
+   |
+   v
+View QR Code
+   |
+   v
+Open Short URL
+   |
+   v
+Return to Dashboard
+   |
+   v
+Check Updated Click Count
+```
+
+---
+
+# 🐳 Docker Implementation
+
+Docker is used to package the application and all Python dependencies into a reproducible environment.
+
+The application uses:
+
+```dockerfile
+FROM python:3.12-slim
+```
+
+as the base image.
+
+---
+
+## Dockerfile
+
+```dockerfile
 FROM python:3.12-slim
 
 WORKDIR /app
@@ -1632,19 +1203,46 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-10000} app:app"]
-Build the Docker Image
+```
+
+---
+
+## Build Docker Image
+
+From the project directory:
+
+```bash
 docker build -t url-shortener .
-Verify the Image
+```
+
+---
+
+## Verify the Image
+
+```bash
 docker images
+```
 
-Expected:
+Example:
 
+```text
 REPOSITORY        TAG
 url-shortener     latest
-Run Docker Locally
+```
 
-For Windows:
+---
 
+## Run Docker with Local MySQL
+
+On Windows, the MySQL server running on the host machine is accessed from Docker using:
+
+```text
+host.docker.internal
+```
+
+Example PowerShell command:
+
+```powershell
 docker run `
 --name url-shortener-app `
 -p 10000:10000 `
@@ -1655,410 +1253,673 @@ docker run `
 -e DB_NAME=url_shortener `
 -e SECRET_KEY="local-secret" `
 url-shortener
+```
 
 Open:
 
+```text
 http://localhost:10000
-☁️ Deployment Architecture
+```
 
-The production deployment follows this architecture:
+---
 
-                     GitHub
-                       │
-                       ▼
-                     Render
-                       │
-                       ▼
-                 Docker Container
-                       │
-                       ▼
-                Flask + Gunicorn
-                       │
-                       ▼
-                   Railway
-                     MySQL
-🚂 Railway MySQL Deployment
-Step 1 — Create a Railway Project
+# ☁️ Production Deployment
 
-Create a new Railway project.
+The production architecture is:
+
+```text
+GitHub
+   |
+   v
+Render
+   |
+   v
+Docker Container
+   |
+   v
+Gunicorn
+   |
+   v
+Flask
+   |
+   v
+Railway MySQL
+```
+
+---
+
+# 🚂 Railway MySQL Deployment
+
+Railway is used to host the production MySQL database.
+
+## Step 1 — Create Railway Project
+
+Create a new project in Railway.
 
 Add:
 
+```text
 Database
-   ↓
+   |
+   v
 MySQL
+```
 
-Railway automatically provisions a MySQL server.
+Railway automatically provisions the MySQL service.
 
-Step 2 — Enable Public Access
+---
 
-Since the Flask application is hosted on Render, the MySQL database must be accessible externally.
+## Step 2 — Enable Public Access
+
+Because the application runs on Render and the database runs on Railway, Render needs an externally accessible MySQL endpoint.
 
 Open:
 
+```text
 MySQL Service
-   ↓
+   |
+   v
 Settings
-   ↓
+   |
+   v
 Networking
-   ↓
+   |
+   v
 Public Access
+```
 
 Enable the TCP proxy.
 
-The MySQL application port is:
+MySQL listens internally on:
 
+```text
 3306
+```
 
-Railway then generates:
+Railway then provides:
 
+```text
 MYSQL_PUBLIC_URL
-Step 3 — Create Production Tables
+```
 
-Use:
+---
 
+## Step 3 — Create Production Tables
+
+Run:
+
+```text
 railway_schema.sql
+```
 
-to create:
+against the Railway MySQL database.
 
+The file creates:
+
+```text
 users
 urls
 clicks
+```
 
-Verify using:
+and the required indexes.
 
+Verify:
+
+```sql
 SHOW TABLES;
+```
 
 Expected:
 
+```text
 clicks
 urls
 users
-🌐 Render Deployment
-Step 1 — Push the Project to GitHub
+```
+
+---
+
+# 🌐 Render Deployment
+
+Render hosts the Dockerized Flask application.
+
+## Step 1 — Push Source Code to GitHub
+
+Repository:
+
+```text
+https://github.com/ALDRIN1704/url-shortener
+```
+
+Typical Git commands:
+
+```bash
 git init
 git add .
 git commit -m "Complete URL Shortener"
 git branch -M main
-git remote add origin YOUR_GITHUB_REPOSITORY_URL
+git remote add origin https://github.com/ALDRIN1704/url-shortener.git
 git push -u origin main
-Step 2 — Create a Render Web Service
+```
+
+---
+
+## Step 2 — Create Render Web Service
 
 In Render:
 
+```text
 New
- ↓
+ |
+ v
 Web Service
- ↓
+ |
+ v
 Connect GitHub
- ↓
-Select Repository
+ |
+ v
+Select ALDRIN1704/url-shortener
+```
 
 Choose:
 
+```text
 Runtime: Docker
+```
 
-Render automatically detects the project's:
+Render automatically reads the repository's `Dockerfile`.
 
-Dockerfile
-Step 3 — Configure Environment Variables
+---
 
-Inside Render:
+## Step 3 — Configure Environment Variables
 
-Environment
+The production application uses:
 
-add:
-
+```text
 DATABASE_URL
 SECRET_KEY
-DATABASE_URL
+```
 
-Copy the Railway:
+### `DATABASE_URL`
 
+Copy Railway's:
+
+```text
 MYSQL_PUBLIC_URL
+```
 
-and paste it into Render as:
+and store it in Render as:
 
+```text
 DATABASE_URL
+```
 
-Example format:
+Example structure:
 
-mysql://username:password@host:port/database
+```text
+mysql://username:password@hostname:port/database
+```
 
-The real value must never be committed to GitHub.
+The actual database URL must never be committed to GitHub.
 
-SECRET_KEY
+---
 
-Generate a secure secret:
+### `SECRET_KEY`
 
+Generate a secure Flask secret locally:
+
+```bash
 python -c "import secrets; print(secrets.token_hex(32))"
+```
 
-Paste the result into Render.
+Add the generated value to Render as:
 
-Step 4 — Deploy
+```text
+SECRET_KEY
+```
 
-Render then performs:
+---
 
-GitHub
-   │
-   ▼
+## Step 4 — Render Build Process
+
+During deployment, Render performs:
+
+```text
+GitHub Repository
+       |
+       v
 Read Dockerfile
-   │
-   ▼
+       |
+       v
+Pull Python 3.12 Image
+       |
+       v
+Install requirements.txt
+       |
+       v
+Copy Application Files
+       |
+       v
 Build Docker Image
-   │
-   ▼
-Install Dependencies
-   │
-   ▼
+       |
+       v
 Start Gunicorn
-   │
-   ▼
-Run Flask Application
-   │
-   ▼
+       |
+       v
+Start Flask Application
+       |
+       v
 Connect to Railway MySQL
+```
 
-Gunicorn listens on:
+---
 
-0.0.0.0:$PORT
+## Step 5 — Gunicorn Production Server
 
-which allows Render to expose the container publicly.
+The Docker container starts Gunicorn using:
 
-🎉 Deployment Result
+```text
+gunicorn --bind 0.0.0.0:${PORT:-10000} app:app
+```
 
-The application is live at:
+Render provides the `PORT` environment variable.
 
-🌐 https://url-shortener-prv0.onrender.com/
+Binding to:
 
-Production stack:
+```text
+0.0.0.0
+```
 
-HTML / CSS / JavaScript
-          │
-          ▼
+allows Render to route public traffic to the application.
+
+---
+
+# 🎉 Production Result
+
+The complete production environment is:
+
+```text
+HTML + CSS + JavaScript
+          |
+          v
         Flask
-          │
-          ▼
+          |
+          v
        Gunicorn
-          │
-          ▼
+          |
+          v
         Docker
-          │
-          ▼
+          |
+          v
         Render
-          │
-          ▼
+          |
+          v
     Railway MySQL
-🧪 Production Testing Flow
+```
 
-The final deployed application was tested using the following flow:
+The deployed application is available at:
 
-Open Application
-       │
-       ▼
-Register User
-       │
-       ▼
+**https://url-shortener-prv0.onrender.com/**
+
+---
+
+# ✅ Production Testing Flow
+
+The production application was tested using the following flow:
+
+```text
+Open Live Application
+        |
+        v
+Register Account
+        |
+        v
 Login
-       │
-       ▼
+        |
+        v
 Enter Long URL
-       │
-       ▼
-Generate Short URL
-       │
-       ▼
-Generate QR Code
-       │
-       ▼
+        |
+        v
+Create Short URL
+        |
+        v
+Display QR Code
+        |
+        v
 Open Short URL
-       │
-       ▼
-Track Click
-       │
-       ▼
-Store Click in MySQL
-       │
-       ▼
-Refresh Dashboard
-       │
-       ▼
-Updated Analytics
-🔐 Security Considerations
-
-The application includes several basic security practices:
-
-✅ Password hashing
-✅ Environment variables for credentials
-✅ Parameterized SQL queries
-✅ Flask session authentication
-✅ Unique short code constraint
-✅ User-specific URL ownership
-✅ Database passwords excluded from source code
-✅ Production secrets stored in Render environment variables
-📈 Future Improvements
-
-Possible future enhancements include:
-
-custom URL aliases
-URL expiration
-email verification
-password reset
-Redis caching
-rate limiting
-custom domains
-geographic analytics
-browser analytics
-device analytics
-downloadable QR codes
-Docker Compose
-automated testing
-CI/CD pipeline
-admin dashboard
-API keys
-background analytics processing
-🎯 Concepts Demonstrated
-
-This project demonstrates practical knowledge of:
-
-Python Backend Development
-
-Flask Framework
-
-REST API Design
-
-MySQL Database Modeling
-
-Relational Database Relationships
-
-Authentication
-
-Password Hashing
-
-Sessions
-
-URL Redirection
-
-Click Tracking
-
-Analytics
-
-QR Code Generation
-
-Environment Variables
-
-Docker
-
-Gunicorn
-
-Railway
-
-Render
-
-Git / GitHub
-
-Cloud Deployment
-🔄 Complete Project Flow
-Long URL
-   │
-   ▼
-Flask Backend
-   │
-   ▼
-Generate Unique Code
-   │
-   ▼
-Store in MySQL
-   │
-   ▼
-Return Short URL + QR
-   │
-   ▼
-User Opens Short URL
-   │
-   ▼
-Flask Finds Original URL
-   │
-   ▼
+        |
+        v
+Find URL in Railway MySQL
+        |
+        v
 Increment Click Count
-   │
-   ▼
+        |
+        v
 Store Click Event
-   │
-   ▼
-Redirect User
-   │
-   ▼
-Analytics Dashboard Updated
-📚 What I Learned
+        |
+        v
+Redirect to Original URL
+        |
+        v
+Return to Dashboard
+        |
+        v
+Refresh Analytics
+        |
+        v
+View Updated Click Data
+```
 
-Through this project, I implemented a complete backend system starting from database design and API development to Docker containerization and cloud deployment.
+---
 
-The project helped me understand how a real application moves through:
+# 🔐 Security Considerations
 
-Development
-    ↓
+The application implements several basic security practices:
+
+- Passwords are hashed using Werkzeug
+- Plain-text passwords are never stored in MySQL
+- SQL queries use parameterized values
+- Flask sessions are used for authentication
+- URLs belong to individual users
+- Analytics endpoints require authentication
+- Database credentials are stored using environment variables
+- Production credentials are not committed to GitHub
+- Flask's secret key is stored as an environment variable
+- Short codes have a database-level unique constraint
+- Submitted URLs are validated before storage
+
+---
+
+# ⚠️ Current Limitations
+
+The application is designed as an assessment/demo project and can be improved further for large-scale production use.
+
+Current areas for improvement include:
+
+- Stronger short-code generation for very high traffic
+- Rate limiting
+- CSRF protection
+- Email-based account verification
+- Password reset flow
+- HTTPS-only secure cookie configuration
+- Automated tests
+- Database migrations
+- Connection pooling configuration
+- More advanced analytics
+- Custom domains
+
+---
+
+# 📈 Future Improvements
+
+Potential improvements include:
+
+- Custom short URL aliases
+- URL expiration dates
+- Password reset
+- Email verification
+- Redis caching
+- Rate limiting
+- Custom domains
+- Browser analytics
+- Device analytics
+- Geographic analytics
+- Downloadable QR codes
+- URL delete/edit functionality
+- Docker Compose
+- Automated unit tests
+- Integration tests
+- CI/CD pipeline
+- Admin dashboard
+- API keys
+- Background analytics processing
+- Database migrations using Alembic or Flask-Migrate
+
+---
+
+# 🎯 Concepts Demonstrated
+
+This project demonstrates practical understanding of:
+
+- Python backend development
+- Flask application development
+- REST API design
+- MySQL database modeling
+- One-to-many relational database relationships
+- SQL queries
+- Database indexing
+- Authentication
+- Password hashing
+- Session management
+- URL validation
+- URL redirection
+- Click tracking
+- Analytics aggregation
+- QR code generation
+- Environment variables
+- Docker containerization
+- Gunicorn
+- Cloud databases
+- Railway
+- Render
+- Git
+- GitHub
+- Production deployment
+
+---
+
+# 📚 Development Journey
+
+The project was implemented progressively:
+
+```text
+Requirement Analysis
+        |
+        v
+Database Modeling
+        |
+        v
+Create Flask Backend
+        |
+        v
+Implement URL Shortening
+        |
+        v
+Implement Redirect
+        |
+        v
+Add Click Tracking
+        |
+        v
+Build Analytics
+        |
+        v
+Add QR Generation
+        |
+        v
+Add Authentication
+        |
+        v
+Test Locally
+        |
+        v
+Create Docker Image
+        |
+        v
+Test Docker Locally
+        |
+        v
+Push to GitHub
+        |
+        v
+Create Railway MySQL
+        |
+        v
+Configure Production Database
+        |
+        v
+Deploy Docker App on Render
+        |
+        v
+Configure Environment Variables
+        |
+        v
+Production Testing
+```
+
+---
+
+# 💡 What I Learned
+
+Through this project, I gained practical experience building a complete backend application from database design through production deployment.
+
+The project provided hands-on experience with:
+
+```text
+Backend Development
+        |
+        v
+API Design
+        |
+        v
 Database Design
-    ↓
-Backend APIs
-    ↓
+        |
+        v
 Authentication
-    ↓
-Testing
-    ↓
+        |
+        v
+Analytics
+        |
+        v
 Docker
-    ↓
+        |
+        v
 Cloud Database
-    ↓
+        |
+        v
 Cloud Deployment
-    ↓
-Production
+        |
+        v
+Production Debugging
+```
 
-It also helped demonstrate how different services work together in a real deployment:
+One important deployment lesson was understanding the difference between:
 
-GitHub
-   ↓
-Render
-   ↓
-Docker
-   ↓
-Flask + Gunicorn
-   ↓
-Railway MySQL
-✅ Final Result
+```text
+localhost MySQL
+```
 
-The finished project includes:
+and:
 
-✔ URL Shortening
-✔ Redirect Handling
-✔ Click Tracking
-✔ Analytics Dashboard
-✔ QR Code Generation
-✔ Registration
-✔ Login / Logout
-✔ User-specific URLs
-✔ MySQL Database
-✔ Docker Containerization
-✔ Railway Database Hosting
-✔ Render Application Hosting
-✔ Production Deployment
-👨‍💻 Author
+```text
+remote Railway MySQL
+```
 
-ALDRIN LIJO
+The local application connected to:
 
-GitHub: https://github.com/ALDRIN1704
+```text
+localhost:3306
+```
 
-<div align="center">
+while the deployed Render application uses Railway's public MySQL URL through:
 
-🔗 URL Shortener
-Python • Flask • MySQL • Docker • Railway • Render
+```text
+DATABASE_URL
+```
 
-<br/>
+This allowed the same Flask application to run correctly in both development and production environments.
 
-🌐 Open Live Application
+---
 
-<br/>
+# ✅ Final Result
 
-Built as a backend development assessment project.
+The completed project includes:
 
-</div>
+- ✅ User registration
+- ✅ User login/logout
+- ✅ Password hashing
+- ✅ URL shortening
+- ✅ Unique short codes
+- ✅ URL validation
+- ✅ Redirect handling
+- ✅ Click tracking
+- ✅ Individual click-event storage
+- ✅ Analytics dashboard
+- ✅ Top URL analytics
+- ✅ 7-day click analytics
+- ✅ QR code generation
+- ✅ User-specific URLs
+- ✅ MySQL database
+- ✅ Database indexes
+- ✅ Docker containerization
+- ✅ Gunicorn production server
+- ✅ Railway MySQL hosting
+- ✅ Render application hosting
+- ✅ GitHub repository
+- ✅ Production deployment
+
+---
+
+## 🔗 Important Links
+
+**Live Application:**  
+https://url-shortener-prv0.onrender.com/
+
+**Health Check:**  
+https://url-shortener-prv0.onrender.com/health
+
+**GitHub Repository:**  
+https://github.com/ALDRIN1704/url-shortener
+
+**GitHub Profile:**  
+https://github.com/ALDRIN1704
+
+---
+
+## 👨‍💻 Author
+
+**Aldrin Lijo E M**
+
+GitHub:  
+https://github.com/ALDRIN1704
+
+Repository:  
+https://github.com/ALDRIN1704/url-shortener
+
+---
+
+## 📄 Project Summary
+
+```text
+Long URL
+    |
+    v
+Flask API
+    |
+    v
+URL Validation
+    |
+    v
+Generate Short Code
+    |
+    v
+MySQL Storage
+    |
+    v
+Short URL + QR Code
+    |
+    v
+Visitor Opens Short URL
+    |
+    v
+Click Tracking
+    |
+    v
+Redirect
+    |
+    v
+Analytics Dashboard
+```
+
+**URL Shortener** demonstrates a complete backend development workflow using **Python, Flask, MySQL, Docker, Railway, and Render**, from local development to a publicly accessible production application.
